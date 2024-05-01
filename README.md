@@ -1,2 +1,0 @@
-# jenkins
-cicd with jenkins
