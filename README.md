@@ -21,69 +21,43 @@ $git clone "your repo"
 $git flow init
 
 
-$ vim Jenkinsfile
+### 2. *pushing java code that you want to build which contain:*
+   - java app code
+   - groovy script that builds the artifact
+   - Jenkinsfile
 
+![image](https://github.com/Elghetani/jenkins/assets/61852267/dba25e66-2345-4a74-a238-fd4c4e7e0dc6)
 
-# paste these lines in the file
-def gv
+### 3. *check your develop branch on github repo*
 
-pipeline {
-    agent any
-    stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
-        stage("build jar") {
-            steps {
-                script {
-                    echo "building jar"
-                    //gv.buildJar()
-                }
-            }
-        }
-        stage("build image") {
-            steps {
-                script {
-                    echo "building image"
-                    //gv.buildImage()
-                }
-            }
-        }
-        stage("deploy") {
-            steps {
-                script {
-                    echo "deploying"
-                    //gv.deployApp()
-                }
-            }
-        }
-    }   
-}
-
-
-# Save and Exit
-
-
-# Push the file to GitHub Repo
-$ git add Jenkinsfile
-$ git commit -m "Add Jenkinsfile"
-$ git push <repo> develop
-
-# check your develop branch on github repo
-
+![image](https://github.com/Elghetani/jenkins/assets/61852267/2443fee5-dfde-4e21-91a0-e642fdb64174)
 
 
 ### 4. *Installing Jenkins container on EC2:*
 
-bash
+On the EC2 Terminal
 
-$ sudo yum update -y
-$ sudo yum install docker -y
-$ sudo service docker start
+#### First, update your existing list of packages:
+$ sudo apt update
+
+#### Next, install a few prerequisite packages which let apt use packages over HTTPS:
+$ sudo apt install apt-transport-https ca-certificates curl software-properties-common
+
+#### Then add the GPG key for the official Docker repository to your system:
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+#### Add the Docker repository to APT sources:
+$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+
+#### This will also update our package database with the Docker packages from the newly added repo.
+
+#### Make sure you are about to install from the Docker repo instead of the default Ubuntu repo:
+$ apt-cache policy docker-ce
+
+#### Finally, install Docker:
+sudo apt install docker-ce
+
+#### After the installation you going to run jenkins as a container with a composed port 8080 and persistent volume
 $ docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
 
 
@@ -94,9 +68,9 @@ $ docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home je
 - source: 0.0.0.0/0
 
 ### Accessing Jenkins:
-- Go to web browser and write : http://(ec2-public-ip)>:8080
-- run the following command inside your container to get Jenkins password
-bash
+- Go to web browser and write : http://(ec2-elastic-ip)>:8080
+- After getting in to the jenkins container run the following command inside your container to get Jenkins password:
+
 $ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 - Copy password to Jenkins tab and sign in
@@ -106,7 +80,7 @@ $ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
    - *Install necessary plugins in Jenkins such as Git and Pipeline.*
    - *Connect Jenkins to GitHub.*
         - Go to "Manage Jenkins" > "Manage Plugins" > "Available" and install "GitHub Integration Plugin".
-     - Set up credentials in Jenkins for GitHub (username and token).
+     - Set up credentials in Jenkins for GitHub (username and password).
    - *Create a new pipeline job.*
      - Select "New Item", name your pipeline , and choose "Pipeline" as the type.
      - In the pipeline configuration, select "Pipeline script from SCM" and choose "Git" as the SCM.
@@ -123,10 +97,12 @@ $ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
    - Content type: *application/json*
    - Select *"Just the push event"*.
    - Ensure the webhook is active
- 
+ ![image](https://github.com/Elghetani/jenkins/assets/61852267/3fbb0311-ab45-4585-bd57-d0126ff1c90a)
+
 ### *With the webhook, Jenkins will trigger a new build every time changes are pushed to the connected branch.*
 
 ### 7. *Testing and Validation:*
    - Push a change to the develop branch and verify Jenkins triggers a build.
    
 - Check the Jenkins dashboard for build status and output.
+![image](https://github.com/Elghetani/jenkins/assets/61852267/3ae11748-2f4e-4af4-96bb-e6956a1b3779)
