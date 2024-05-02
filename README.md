@@ -16,6 +16,8 @@
    - Apply the Git Flow model.
 bash
 #using git bash clone your repo
+
+
 $git clone "your repo"
 
 $git flow init
