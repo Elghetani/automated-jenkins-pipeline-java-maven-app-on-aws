@@ -26,7 +26,47 @@ $git flow init
    - groovy script that builds the artifact
    - Jenkinsfile
 
-![image](https://github.com/Elghetani/jenkins/assets/61852267/dba25e66-2345-4a74-a238-fd4c4e7e0dc6)
+```
+    def gv
+    pipeline {
+
+    agent any
+    
+    stages {
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
+        stage("build jar") {
+            steps {
+                script {
+                    echo "building jar"
+                    //gv.buildJar()
+                }
+            }
+        }
+        stage("build image") {
+            steps {
+                script {
+                    echo "building image"
+                    //gv.buildImage()
+                }
+            }
+        }
+        stage("deploy") {
+            steps {
+                script {
+                    echo "deploying"
+                    //gv.deployApp()
+                }
+            }
+        }
+    }
+```
+
 
 ### 3. *check your develop branch on github repo*
 
@@ -38,28 +78,36 @@ $git flow init
 On the EC2 Terminal
 
 #### First, update your existing list of packages:
+
+```
 $ sudo apt update
-
+```
 #### Next, install a few prerequisite packages which let apt use packages over HTTPS:
+```
 $ sudo apt install apt-transport-https ca-certificates curl software-properties-common
-
+```
 #### Then add the GPG key for the official Docker repository to your system:
+```
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
+```
 #### Add the Docker repository to APT sources:
+```
 $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-
+```
 #### This will also update our package database with the Docker packages from the newly added repo.
 
 #### Make sure you are about to install from the Docker repo instead of the default Ubuntu repo:
+```
 $ apt-cache policy docker-ce
-
+```
 #### Finally, install Docker:
+```
 sudo apt install docker-ce
-
+```
 #### After the installation you going to run jenkins as a container with a composed port 8080 and persistent volume
+```
 $ docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
-
+```
 
 ### Note :
 *Add Inbound rule in the security group of the EC2 instance:*
@@ -70,9 +118,9 @@ $ docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home je
 ### Accessing Jenkins:
 - Go to web browser and write : http://(ec2-elastic-ip)>:8080
 - After getting in to the jenkins container run the following command inside your container to get Jenkins password:
-
+```
 $ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-
+```
 - Copy password to Jenkins tab and sign in
 
 
