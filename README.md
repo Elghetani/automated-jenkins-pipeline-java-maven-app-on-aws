@@ -106,7 +106,7 @@ sudo apt install docker-ce
 ```
 #### After the installation you going to run jenkins as a container with a composed port 8080 and persistent volume
 ```
-$ docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+$ sudo docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
 ```
 
 ### Note :
