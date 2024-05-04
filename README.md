@@ -1,4 +1,4 @@
-# Automated Build and Test java app with Jenkins on EC2 Instance
+# Automated Build, Test and push java app image to docker hub with Jenkins on EC2 Instance
 
 
 
