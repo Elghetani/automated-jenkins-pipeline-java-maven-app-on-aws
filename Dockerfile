@@ -1,4 +1,4 @@
-FROM Openjdk:8-jre-alpine
+FROM openjdk:23-oraclelinux9
 
 EXPOSE 8080
 
