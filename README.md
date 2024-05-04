@@ -1,4 +1,4 @@
-# Automated Build and Test with Jenkins on EC2 Instance
+# Automated Build and Test java app with Jenkins on EC2 Instance
 
 
 
@@ -8,6 +8,8 @@
 - EC2 instance on AWS with docker installed
 - Jenkins container 
 - GitHub account
+- java app
+- maven tool installed in jenkins
 - Gitbash on your local host
 
 ## Installation and Configuration Guide
