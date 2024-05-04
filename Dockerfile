@@ -1,5 +1,4 @@
-FROM openjdk
-
+FROM openjdk:17-jdk-alpine
 EXPOSE 8080
 
 COPY ./target/java-maven-app-1.1.0-SNAPSHOT.jar /usr/app
