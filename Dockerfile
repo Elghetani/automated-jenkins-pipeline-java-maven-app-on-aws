@@ -1,4 +1,4 @@
-FROM openjdk:23-jre-alpine
+FROM openjdk:23
 
 EXPOSE 8080
 
