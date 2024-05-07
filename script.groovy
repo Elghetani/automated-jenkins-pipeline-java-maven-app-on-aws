@@ -3,7 +3,11 @@ def buildJar() {
     sh 'mvn package'
 } 
 def test() {
-    
+    try {
+                lss
+            }
+            catch (err) {                                        
+                unstable(message: "${STAGE_NAME} is unstable")
 }
 def buildImage() {
     echo "building the docker image..."
