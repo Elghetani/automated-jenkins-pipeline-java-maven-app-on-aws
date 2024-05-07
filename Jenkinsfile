@@ -25,6 +25,9 @@ pipeline {
                 script {
                     gv.buildImage()
                 }
+            post {
+                echo "BUILD FAILURE."
+            }
             }
         }
         stage("deploy") {
