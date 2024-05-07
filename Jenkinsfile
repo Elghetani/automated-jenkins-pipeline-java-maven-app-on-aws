@@ -14,11 +14,12 @@ pipeline {
             }
         }
     post {
-    always {
-        emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
-           }
+        always {
+            junit '**/target/*.xml'
         }
-    }
+        failure {
+            mail to: team@example.com, subject: 'The Pipeline failed :('
+        }
         stage("build jar") {
             steps {
                 script {
