@@ -25,12 +25,6 @@ pipeline {
                 script {
                     gv.buildImage()
                 }
-                    }
-            post {
-                failure {
-                    echo "This block runs when the build is failed."
-                    }
-                }
             }
         }
         stage("deploy") {
