@@ -11,7 +11,9 @@ def buildImage() {
         sh ' docker push elghetani/jenkins:jma-2.0'
     }
 } 
-
+def testApp() {
+    echo 'perform testing'
+}
 def deployApp() {
     echo 'deploying the application...'
 } 
