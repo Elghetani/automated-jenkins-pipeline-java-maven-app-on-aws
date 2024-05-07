@@ -25,11 +25,12 @@ pipeline {
                 script {
                     gv.buildImage()
                 }
+                    }
             post {
-                unstable {
-                echo "BUILD FAILURE."
+                failure {
+                    echo "This block runs when the build is failed."
+                    }
                 }
-            }
             }
         }
         stage("deploy") {
