@@ -13,7 +13,7 @@ def buildImage() {
     }
      }
     catch (err) {                                        
-                unstable(message: "${buildImage} is unstable")
+                unstable(message: "${STAGE_NAME} is unstable")
             }
 } 
 
