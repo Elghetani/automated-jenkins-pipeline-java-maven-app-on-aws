@@ -26,7 +26,9 @@ pipeline {
                     gv.buildImage()
                 }
             post {
+                unstable {
                 echo "BUILD FAILURE."
+                }
             }
             }
         }
