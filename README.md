@@ -31,11 +31,13 @@ $git flow init
    - Jenkinsfile
 
 ```
-    def gv
-    pipeline {
+def gv
 
+pipeline {
     agent any
-    
+    tools {
+        maven 'maven'
+    }
     stages {
         stage("init") {
             steps {
@@ -47,28 +49,26 @@ $git flow init
         stage("build jar") {
             steps {
                 script {
-                    echo "building jar"
-                    //gv.buildJar()
+                    gv.buildJar()
                 }
             }
         }
         stage("build image") {
             steps {
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                    gv.buildImage()
                 }
             }
         }
         stage("deploy") {
             steps {
                 script {
-                    echo "deploying"
-                    //gv.deployApp()
+                    gv.deployApp()
                 }
             }
         }
-    }
+    }   
+}
 ```
 
 
