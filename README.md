@@ -25,7 +25,7 @@ $git clone "your repo"
 $git flow init
 
 
-### 2. *pushing java code that you want to build which contain:*
+### 2. *pushing java code that you want to build which contain::*
    - java app code
    - groovy script that builds the artifact
    - Jenkinsfile
