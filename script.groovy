@@ -13,6 +13,12 @@ def buildImage() {
 } 
 def testApp() {
     echo 'perform testing'
+    try {
+    eco 'iam a mistake'
+    }
+    catch {
+        echo "GREAT!"
+    }
 }
 def deployApp() {
     echo 'deploying the application...'
