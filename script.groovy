@@ -13,7 +13,7 @@ def buildImage() {
 } 
 def testApp() {
     try {
-    sh "eco 'iam a mistake'"
+    sh "exit 1"
     } 
     catch (Exception e) {
         echo "Test failed, marking build as unstable"
