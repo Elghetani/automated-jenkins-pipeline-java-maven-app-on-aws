@@ -17,6 +17,7 @@ def testApp() {
             }
             catch (err) {                                        
                 unstable(message: "${STAGE_NAME} is unstable")
+            }
 }
 def deployApp() {
     echo 'deploying the application...'
