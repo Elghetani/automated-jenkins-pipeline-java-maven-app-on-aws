@@ -12,13 +12,13 @@ def buildImage() {
     }
 } 
 def testApp() {
-    echo 'perform testing'
     try {
     eco 'iam a mistake'
-    }
-    catch {
-        echo "GREAT!"
-    }
+    } catch (Exception e) {
+        echo "Test failed, marking build as unstable"
+        currentBuild.result = 'UNSTABLE'
+        return
+                    }
 }
 def deployApp() {
     echo 'deploying the application...'
