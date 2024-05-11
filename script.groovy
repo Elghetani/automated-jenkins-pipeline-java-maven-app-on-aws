@@ -18,7 +18,6 @@ def testApp() {
     catch (Exception e) {
         echo "Test failed, marking build as unstable"
         currentBuild.result = 'FAILURE'
-        currentStage.result = 'FAILURE'
         return
                     }
 }
