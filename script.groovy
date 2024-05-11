@@ -12,14 +12,9 @@ def buildImage() {
     }
 } 
 def testApp() {
-    try {
-    sh "exit 1"
-    } 
-    catch (Exception e) {
-        echo "Test failed, marking build as unstable"
-        currentBuild.result = 'FAILURE'
-        return
-                    }
+ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+     
+                    }
 }
 def deployApp() {
     echo 'deploying the application...'
