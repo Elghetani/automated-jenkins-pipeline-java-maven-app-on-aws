@@ -16,7 +16,7 @@ def testApp() {
                 sh "exit 1"
             }
             catch (err) {                                        
-                failure(message: "${STAGE_NAME} is unstable")
+                unstable(message: "${STAGE_NAME} is unstable")
             }
 }
 def deployApp() {
