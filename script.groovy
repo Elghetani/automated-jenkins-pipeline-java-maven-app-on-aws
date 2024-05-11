@@ -12,9 +12,11 @@ def buildImage() {
     }
 } 
 def testApp() {
- catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-     
-                    }
+            try {
+                sh "exit 1"
+            }
+            catch (err) {                                        
+                unstable(message: "${STAGE_NAME} is unstable")
 }
 def deployApp() {
     echo 'deploying the application...'
