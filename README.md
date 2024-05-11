@@ -1,4 +1,4 @@
-# Automated Build and Test with Jenkins on EC2 Instance
+# Automated Build, Test and push java app image to docker hub with Jenkins on EC2 Instance
 
 
 
@@ -8,6 +8,8 @@
 - EC2 instance on AWS with docker installed
 - Jenkins container 
 - GitHub account
+- java app
+- maven tool installed in jenkins
 - Gitbash on your local host
 
 ## Installation and Configuration Guide
@@ -16,22 +18,26 @@
    - Apply the Git Flow model.
 bash
 #using git bash clone your repo
+
+
 $git clone "your repo"
 
 $git flow init
 
 
-### 2. *pushing java code that you want to build which contain:*
+### 2. *pushing java code that you want to build which contain::*
    - java app code
    - groovy script that builds the artifact
    - Jenkinsfile
 
 ```
-    def gv
-    pipeline {
+def gv
 
+pipeline {
     agent any
-    
+    tools {
+        maven 'maven'
+    }
     stages {
         stage("init") {
             steps {
@@ -43,30 +49,50 @@ $git flow init
         stage("build jar") {
             steps {
                 script {
-                    echo "building jar"
-                    //gv.buildJar()
+                    gv.buildJar()
                 }
             }
         }
         stage("build image") {
             steps {
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                    gv.buildImage()
                 }
             }
         }
         stage("deploy") {
             steps {
                 script {
-                    echo "deploying"
-                    //gv.deployApp()
+                    gv.deployApp()
                 }
             }
         }
-    }
+    }   
+}
 ```
+and here is script.groovy file content
 
+```
+def buildJar() {
+    echo "building the application..."
+    sh 'mvn package'
+} 
+
+def buildImage() {
+    echo "building the docker image..."
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+        sh ' docker build -t elghetani/jenkins:jma-2.0 .'
+        sh " echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+        sh ' docker push elghetani/jenkins:jma-2.0'
+    }
+} 
+
+def deployApp() {
+    echo 'deploying the application...'
+} 
+
+return this
+```
 
 ### 3. *check your develop branch on github repo*
 
@@ -106,7 +132,7 @@ sudo apt install docker-ce
 ```
 #### After the installation you going to run jenkins as a container with a composed port 8080 and persistent volume
 ```
-$ sudo docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+$ docker run -p 8080:8080 -p 50000:50000 -d -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
 ```
 
 ### Note :
