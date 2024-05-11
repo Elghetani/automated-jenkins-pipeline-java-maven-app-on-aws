@@ -13,8 +13,9 @@ def buildImage() {
 } 
 def testApp() {
     try {
-    eco 'iam a mistake'
-    } catch (Exception e) {
+    sh "eco 'iam a mistake'"
+    } 
+    catch (Exception e) {
         echo "Test failed, marking build as unstable"
         currentBuild.result = 'UNSTABLE'
         return
